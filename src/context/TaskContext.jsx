@@ -12,9 +12,9 @@ export const useTasks = () => {
 
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([
-    { id: "1", title: "my first task", description: "some task" },
-    { id: "2", title: "my second task", description: "some second task" },
-    { id: "3", title: "my third task", description: "some third task" },
+    // { id: "1", title: "my first task", description: "some task" },
+    // { id: "2", title: "my second task", description: "some second task" },
+    // { id: "3", title: "my third task", description: "some third task" },
   ]);
 
   const createTask = (title, description) =>

@@ -2,6 +2,7 @@ import { TaskProvider } from '@/context/TaskContext';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import { Toaster } from './Toaster';
+import Layout from '@/components/Layout';
 
 export const metadata = {
   title: 'Create Next App',
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
       <body>
         <TaskProvider>
           <Navbar />
-          {children}
+          <Layout>
+            {children}
+          </Layout>
           <Toaster/>
         </TaskProvider>
       </body>

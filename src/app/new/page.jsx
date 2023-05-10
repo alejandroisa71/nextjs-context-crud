@@ -1,55 +1,57 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useTasks } from "../../context/TaskContext";
-import { useRouter } from "next/navigation";
+'use client';
+import { useEffect } from 'react';
+import { useTasks } from '../../context/TaskContext';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
 
-function Page({ params }) {
-  const [task, setTask] = useState({
-    title: "",
-    description: "",
-  });
-  const { createTask, tasks } = useTasks();
+const TaskFormPage = ({ params }) => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  const { tasks, createTask, updateTask } = useTasks();
   const router = useRouter();
-  console.log(params);
 
-  // console.log(tasks)
-  const handleChange = (e) =>
-    setTask({ ...task, [e.target.name]: e.target.value });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createTask(task.title, task.description);
-    router.push("/");
-  };
+  const onSubmit = handleSubmit((data) => {
+    if (params.id) {
+      updateTask(params.id, data);
+    } else {
+      createTask(data.title, data.description);
+    }
+    router.push('/');
+  });
 
   useEffect(() => {
     if (params.id) {
       const taskFound = tasks.find((task) => task.id === params.id);
       if (taskFound) {
-        console.log(taskFound.title);
-        console.log(taskFound.description);
-
-        setTask(taskFound.title, taskFound.description);
+        setValue('title', taskFound.title);
+        setValue('description', taskFound.description);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit}>
       <input
-        name="title"
         placeholder="Write a title"
-        onChange={handleChange}
-        value={task.title}  
+        autoFocus
+        name='title'
+        {...register('title', { required: true })}
       />
+      {errors.title && <span>This field is required</span>}
       <textarea
-        name="description"
         placeholder="Write a description"
-        onChange={handleChange}
-        value={task.description}
+        {...register('description', { required: true })}
+        name='description'
       />
+      {errors.description && <span>This field is required</span>}
       <button>Save</button>
     </form>
   );
-}
-export default Page;
+};
+export default TaskFormPage;

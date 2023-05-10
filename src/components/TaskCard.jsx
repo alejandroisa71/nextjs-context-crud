@@ -1,5 +1,5 @@
-import { useRouter } from "next/navigation";
-import { useTasks } from "../context/TaskContext";
+import { useRouter } from 'next/navigation';
+import { useTasks } from '../context/TaskContext';
 
 const TaskCard = ({ task }) => {
   const router = useRouter();
@@ -7,14 +7,14 @@ const TaskCard = ({ task }) => {
   return (
     <div
       key={task.id}
-      style={{ background: "#202020", color: "white" }}
+      style={{ background: '#202020', color: 'white' }}
       onClick={() => router.push(`/edit/${task.id}`)}
     >
       <h1>{task.title}</h1>
       <button
         onClick={(e) => {
           e.stopPropagation();
-          const accept = window.confirm("are you sure");
+          const accept = window.confirm('are you sure');
           if (accept) deleteTask(task.id);
         }}
       >

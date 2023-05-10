@@ -12,8 +12,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <TaskProvider>
-          <Navbar/>
-          {children}</TaskProvider>
+          <Navbar />
+          {children}
+        </TaskProvider>
       </body>
     </html>
   );
